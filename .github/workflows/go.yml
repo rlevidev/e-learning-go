@@ -1,0 +1,58 @@
+# .github/workflows/go.yml
+
+name: Go CI Build and Test
+
+on:
+  # Dispara o workflow em push (envio) e pull request (solicitação de merge)
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # O CI rodará na última versão estável do Ubuntu
+    runs-on: ubuntu-latest
+    
+    # Define a matriz de testes para diferentes versões do Go
+    strategy:
+      matrix:
+        go: [ '1.21', '1.22' ]
+
+    steps:
+    - name: Checkout Código
+      # Ação para baixar o código do repositório
+      uses: actions/checkout@v4
+
+    - name: Configurar Go
+      # Ação para configurar a versão do Go na máquina virtual
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go }}
+        cache: true # Habilita cache de módulos para builds mais rápidos
+        
+    - name: Baixar Dependências
+      # O comando 'go mod download' baixa os módulos definidos no go.mod
+      run: go mod download
+
+    - name: Lint (Opcional, mas recomendado)
+      # Instala e executa uma ferramenta popular de lint, como o golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: v1.59
+        args: --timeout=5m
+        
+    - name: Rodar Testes
+      # Executa todos os testes recursivamente e mostra o resultado de cobertura
+      run: go test ./... -v -race -coverprofile=coverage.out
+      
+    - name: Build da Aplicação
+      # Compila o binário da aplicação. O binário de saída será 'e-learning-api'
+      run: go build -o e-learning-go .
+      
+    - name: Upload do Binário (Opcional)
+      # Armazena o binário compilado como um "artifact" para ser baixado posteriormente
+      uses: actions/upload-artifact@v4
+      with:
+        name: e-learning-api-binario-${{ matrix.go }}
+        path: e-learning-api
