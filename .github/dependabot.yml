@@ -1,0 +1,22 @@
+# .github/dependabot.yml
+
+version: 2
+updates:
+  # Configuração para as dependências do Go
+  - package-ecosystem: "gomod"
+    # O Dependabot procurará por go.mod e go.sum no diretório raiz.
+    directory: "/" 
+    # Agenda para verificar atualizações
+    schedule:
+      # Verifique novas versões todos os dias de semana
+      interval: "daily"
+    # Define como Pull Requests serão agrupados
+    groups:
+      # Agrupar todas as dependências do Go em um único PR (para reduzir a poluição)
+      go-dependencies:
+        patterns:
+          - "*"
+    # Atribui o Pull Request a um revisor/time (opcional)
+    # reviewers:
+    #   - seu_username_aqui
+    #   - nome_do_seu_time
