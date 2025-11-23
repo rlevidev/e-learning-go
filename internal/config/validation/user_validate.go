@@ -8,7 +8,7 @@ import (
 	pt "github.com/go-playground/locales/pt"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
-	resterr "github.com/rlevidev/e-learning-go/src/config/resterr"
+	resterr "github.com/rlevidev/e-learning-go/internal/config/resterr"
 
 	pt_translation "github.com/go-playground/validator/v10/translations/pt"
 )
