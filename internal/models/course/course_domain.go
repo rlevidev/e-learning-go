@@ -1,9 +1,13 @@
 package course
 
+import (
+	"time"
+)
+
 type CourseDomain struct {
-	ID          int64  `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Instructor  string `json:"instructor"`
-	CreatedAt   string `json:"created_at"`
+	ID          int64     `json:"id" gorm:"primaryKey;autoIncrement"`
+	Title       string    `json:"title" gorm:"not null"`
+	Description string    `json:"description"`
+	Instructor  string    `json:"instructor" gorm:"not null"`
+	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
 }

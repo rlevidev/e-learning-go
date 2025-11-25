@@ -1,7 +1,7 @@
 package studentprogress
 
 type StudentProgressDomain struct {
-	UserID   int64 `json:"user_id"`
-	LessonID int64 `json:"lesson_id"`
-	Done     bool  `json:"done"`
+	UserID   string `json:"user_id" gorm:"primaryKey;type:uuid;not null"`
+	LessonID int64  `json:"lesson_id" gorm:"primaryKey;not null"`
+	Done     bool   `json:"done" gorm:"default:false"`
 }
